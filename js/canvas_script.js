@@ -9,8 +9,14 @@ function updateWindowSize(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-
+var mouseX = windowWidth * 0.5
+var mouseY = windowHeight * 0.5
 updateWindowSize()
+window.addEventListener("mousemove", function(event){
+    mouseX = event.x
+    mouseY = event.y
+})
+
 window.addEventListener("resize", function(event){
     updateWindowSize()
 });
@@ -32,15 +38,21 @@ function SquareColor(radius){
         c.beginPath()
         var gradient = c.createLinearGradient(this.x, this.y,
             this.x + this.radius*2, this.y + this.radius*2);
-        gradient.addColorStop("0", "red");
-        gradient.addColorStop("0.125", "yellow");
-        gradient.addColorStop("0.25", "green");
-        gradient.addColorStop("0.375", "cyan");
-        gradient.addColorStop("0.5" ,"blue");
-        gradient.addColorStop("0.625", "cyan");
-        gradient.addColorStop("0.75", "green");
-        gradient.addColorStop("0.875", "yellow");
-        gradient.addColorStop("1.0", "red");
+        var alphaMultiplier = 0.002
+        var alphaMinus = 75
+        this.alphaValue = (this.radius -alphaMinus) * alphaMultiplier
+        if(this.alphaValue <= 0){
+            this.alphaValue = 0
+        }
+        gradient.addColorStop("0", "rgba(255, 0, 0, +"+ this.alphaValue +")");
+        gradient.addColorStop("0.125", "rgba(255, 255, 0, +"+ this.alphaValue +")");
+        gradient.addColorStop("0.25", "rgba(0, 255, 0, +"+ this.alphaValue +")");
+        gradient.addColorStop("0.375", "rgba(0, 255, 255, +"+ this.alphaValue +")");
+        gradient.addColorStop("0.5" ,"rgba(0, 0, 255, +"+ this.alphaValue +")");
+        gradient.addColorStop("0.625", "rgba(0, 255, 255, +"+ this.alphaValue +")");
+        gradient.addColorStop("0.75", "rgba(0, 255, 0, +"+ this.alphaValue +")");
+        gradient.addColorStop("0.875", "rgba(255, 255, 0, +"+ this.alphaValue +")");
+        gradient.addColorStop("1.0", "rgba(255, 0, 0, +"+ this.alphaValue +")");
 
         c.strokeStyle = gradient;
 
@@ -51,12 +63,12 @@ function SquareColor(radius){
 
     this.update = function(){
         this.strokeWidth = this.radius * 0.025
-        if(this.strokeWidth > 25){
-            this.strokeWidth = 25
+        if(this.strokeWidth > distance+1){
+            this.strokeWidth = distance+1
         }
         this.radius = this.radius
-        this.x = (windowWidth * 0.5) - (this.radius)
-        this.y = (windowHeight * 0.5) - (this.radius)
+        this.x = (windowWidth * 0.5) - (this.radius) + ((mouseX - (windowWidth * 0.5))/(this.radius+1)*10)
+        this.y = (windowHeight * 0.5) - (this.radius) + ((mouseY - (windowHeight * 0.5))/(this.radius+1)*10)
         this.draw()
     }
 }
@@ -69,22 +81,24 @@ function Square(radius){
 
         c.lineWidth = this.strokeWidth;
         
-        c.beginPath()
+       
         
 
         c.strokeStyle = "white"
+        c.strokeStyle = "rgba(250, 250, 250, " + (this.radius-75)*0.0025 + ")"
         c.rect(this.x, this.y, this.radius * 2, this.radius * 2)
         c.stroke()
     }
 
     this.update = function(){
-        this.strokeWidth = this.radius * 0.025
-        if(this.strokeWidth > 25){
-            this.strokeWidth = 25
+        c.beginPath()
+        this.strokeWidth = (this.radius) * 0.025
+        if(this.strokeWidth > distance+2){
+            this.strokeWidth = distance+2
         }
         this.radius = this.radius
-        this.x = (windowWidth * 0.5) - (this.radius)
-        this.y = (windowHeight * 0.5) - (this.radius)
+        this.x = (windowWidth * 0.5) - (this.radius) + ((mouseX - (windowWidth * 0.5))/(this.radius+1)*10)
+        this.y = (windowHeight * 0.5) - (this.radius) + ((mouseY - (windowHeight * 0.5))/(this.radius+1)*10)
         this.draw()
     }
 }
@@ -109,7 +123,8 @@ function animate(){
         }
 
         squaresArray[i].update()
-        
+
+
         squaresArray[i].radius -= 0.25
         squaresColorArray[i].radius -= 0.25
 
@@ -120,7 +135,7 @@ function animate(){
         if(squaresColorArray[i].radius < 1){
             squaresColorArray[i].radius = squaresColorArray.length * distance
         }
-        console.log(squaresArray[i].radius)
+        console.log(squaresColorArray[i].radius)
     }
     
 }

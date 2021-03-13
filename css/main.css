@@ -1,7 +1,14 @@
+:root {
+  font-family: 'Shippori Mincho B1', serif;
+  --bg_color: #0f0f0f;
+  --bg_color_alpha: #0f0f0f66;
+}
+
 body {
   margin: 0;
   background-color: "black";
   height: 100vh;
+  font-size: 16px;
 }
 
 .canvas_container {
@@ -13,7 +20,7 @@ body {
 }
 
 canvas {
-  background-color: #0f0f0f;
+  background-color: var(--bg_color);
   position: absolute;
   left: 0;
   top: 0;
@@ -27,9 +34,9 @@ canvas {
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  background-color: #0f0f0f;
-  -webkit-box-shadow: 0px 0px 25vh 25vh #0f0f0f;
-          box-shadow: 0px 0px 25vh 25vh #0f0f0f;
+  background-color: var(--bg_color);
+  -webkit-box-shadow: 0px 0px 25vh 25vh var(--bg_color);
+          box-shadow: 0px 0px 25vh 25vh var(--bg_color);
 }
 
 .container_big {
@@ -38,7 +45,67 @@ canvas {
   height: 100vh;
   left: 0;
   top: 0;
-  -webkit-box-shadow: inset 0px 0px 50px 0px white;
-          box-shadow: inset 0px 0px 50px 0px white;
+  -webkit-box-shadow: inset 0px 0px 50px 0px #ffffff11;
+          box-shadow: inset 0px 0px 50px 0px #ffffff11;
+}
+
+.main_container {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: var(--bg_color_alpha);
+  -webkit-box-shadow: 0px 0px 80px 100px var(--bg_color_alpha);
+          box-shadow: 0px 0px 80px 100px var(--bg_color_alpha);
+}
+
+.main_container img {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  position: absolute;
+  max-width: 300px;
+}
+
+.main_container .aleph {
+  top: 54%;
+}
+
+.main_container .socials {
+  position: absolute;
+  bottom: 2em;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 300px;
+  margin: auto;
+}
+
+.main_container .socials a {
+  padding: auto;
+  text-decoration: none;
+  color: white;
+  -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+}
+
+.main_container .socials a:hover {
+  color: #7962ff;
+}
+
+.main_container .contact {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 300px;
 }
 /*# sourceMappingURL=main.css.map */
